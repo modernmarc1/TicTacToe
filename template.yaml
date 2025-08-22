@@ -21,6 +21,7 @@ Resources:
       CodeUri: backend/
       Handler: src/handlers/game.gameHandler
       Runtime: nodejs22.x
+      MemorySize: 10240
       Description: HTTP post method to upload file for processing
       Environment:
         Variables:

@@ -25,12 +25,24 @@ function renderRows({squares, handleClick}) {
 }
 
 function GameBoard() {
+  const [id, setId] = useState('');
   const [status, setStatus] = useState('Your Turn!');
   const [squares, setSquares] = useState(Array(9).fill(null));
-  const [id, setId] = useState('');
+  const [winner, setWinner] = useState(false);
+
+  const handlePlayAgain = () => {
+    setId('');
+    setStatus('Your Turn!');
+    setSquares(Array(9).fill(null));
+    setWinner(false);
+  };
 
   const handleClick = async (i) => {
     try {
+      if (squares[i]) {
+        return;
+      }
+
       // set user move
       const nextSquares = squares.slice();
       nextSquares[i] = 'X';
@@ -49,15 +61,16 @@ function GameBoard() {
         }
       );
 
-      //update board with user and computer move
+      //update board with computer move
       const data = await response.text();
       const parsedData = JSON.parse(data);
-      setSquares(parsedData.squares);
+      console.log('parsedData', parsedData);
       if (!id) setId(parsedData.id);
+      setSquares(parsedData.board);
       
       if (parsedData.winner) {
-        setStatus(`Game Over! ${parsedData.winner} is the winner!`);
-        setSquares(Array(9).fill(null));
+        setStatus(`Game Over! ${parsedData.winner === 'tie' ? 'It\'s a tie!' : `${parsedData.winner} is the winner!`}`);
+        setWinner(true);
         return;
       } else {
         setStatus('Your Turn!');
@@ -72,6 +85,7 @@ function GameBoard() {
     <div>
       {renderRows({squares, handleClick})}
       <div className="status">{status}</div>
+      {winner && <button onClick={handlePlayAgain}>Play Again</button>}
     </div>
   );
 }
