@@ -64,7 +64,7 @@ function GameBoard() {
       //update board with computer move
       const data = await response.text();
       const parsedData = JSON.parse(data);
-      console.log('parsedData', parsedData);
+
       if (!id) setId(parsedData.id);
       setSquares(parsedData.board);
       

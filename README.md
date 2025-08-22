@@ -1,6 +1,6 @@
 # Serverless Tic-Tac-Toe Game
 
-This project is a full-stack serverless tic-tac-toe game where players compete against an intelligent AI opponent. The AI is designed to never lose, it will either win or force a draw. Built using AWS Serverless Application Model (SAM), the application features a React-based frontend for gameplay and AWS Lambda functions for game logic and AI decision-making. For local testing and development, the project uses [LocalStack](https://github.com/localstack/localstack) to emulate AWS services such as API Gateway and DynamoDB.
+This project is a full-stack serverless tic-tac-toe game where players compete against an intelligent computer opponent. The AI is designed to never lose, it will either win or force a draw. Built using AWS Serverless Application Model (SAM), the application features a React-based frontend for gameplay and AWS Lambda functions for game logic and AI decision-making. For local testing and development, the project uses [LocalStack](https://github.com/localstack/localstack) to emulate AWS services such as API Gateway and DynamoDB.
 
 ---
 
@@ -16,7 +16,7 @@ This project is a full-stack serverless tic-tac-toe game where players compete a
 ## Features
 
 - **RESTful API**: API Gateway provides endpoints for game moves and AI responses.
-- **Intelligent AI Opponent**: Advanced AI that implements optimal tic-tac-toe strategy using minimax algorithm. The computer opponent will never lose - it either wins or forces a draw.
+- **Intelligent Computer Opponent**: Computer that implements optimal tic-tac-toe strategy using minimax algorithm. The computer opponent will never lose - it either wins or forces a draw.
 - **CloudWatch Logging**: All Lambda logs are sent to CloudWatch for monitoring and debugging.
 
 ---
