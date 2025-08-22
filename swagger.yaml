@@ -1,0 +1,65 @@
+openapi: 3.0.3
+info:
+  title: Home Energy Usage Uploader API
+  version: 1.0.0
+  description: |
+    Accepts a tic-tac-toe game board and decides the ai's next move or if there's a winner.
+servers:
+  - url: "https://${ApiGateway}.execute-api.${AWS::Region}.amazonaws.com/Test/"
+    description: API Gateway HTTP API stage
+paths:
+  /game/play:
+    post:
+      x-amazon-apigateway-integration:
+        uri:
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${gameFunction.Arn}/invocations
+        httpMethod: POST
+        type: aws_proxy
+      summary: Play a game of tic-tac-toe
+      operationId: playGame
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadRequest'
+      responses:
+        '200':
+          description: Successfully processed the game move
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        '400':
+          description: Invalid request 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        '500':
+          description: Unexpected internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+components:
+  schemas:
+    UploadRequest:
+      type: object
+      required: [board]
+      properties:
+        board:
+          type: array
+          items:
+            type: integer
+    Response:
+      type: object
+      required: [board, message]
+      properties:
+        board:
+          type: array
+          items:
+            type: integer
+        message:
+          type: string
+security: []

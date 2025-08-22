@@ -1,0 +1,51 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  Tic-Tac-Toe Game Backend API
+Transform:
+- AWS::Serverless-2016-10-31
+
+Resources:
+  ApiGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Test
+      DefinitionBody:
+        Fn::Transform:
+          Name: AWS::Include
+          Parameters:
+            Location: swagger.yaml
+
+  gameFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: backend/
+      Handler: src/handlers/game.gameHandler
+      Runtime: nodejs22.x
+      Description: HTTP post method to upload file for processing
+      Environment:
+        Variables:
+          TABLE_NAME: GameTable
+          DYNAMODB_ENDPOINT: http://dynamodb-local:8000
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref gameTable
+      LoggingConfig:
+        LogGroup: !Ref gameLogGroup
+
+  gameTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      TableName: GameTable
+      PrimaryKey: 
+        Name: id
+        Type: String
+
+  gameLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: game-log-group
+
+Outputs:
+  APIGatewayEndpoint:
+    Description: API Gateway endpoint URL for Test stage
+    Value: !Sub "https://${ApiGateway}.execute-api.${AWS::Region}.amazonaws.com/Test/"
