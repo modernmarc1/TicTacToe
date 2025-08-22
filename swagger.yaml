@@ -46,12 +46,14 @@ components:
   schemas:
     UploadRequest:
       type: object
-      required: [board]
+      required: [board, id]
       properties:
         board:
           type: array
           items:
             type: integer
+        id:
+          type: string
     Response:
       type: object
       required: [board, message]
@@ -60,6 +62,8 @@ components:
           type: array
           items:
             type: integer
+        winner:
+          type: string
         message:
           type: string
 security: []
