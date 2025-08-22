@@ -38,9 +38,9 @@ function isMovesLeft(board) {
 // Minimax function for 1D board
 function minimax(board, depth, isMax) {
     const winner = CalculateWinner(board);
-    if (winner === 'O') return 10 - depth;      // AI wins
-    if (winner === 'X') return depth - 10;      // User wins
-    if (!isMovesLeft(board)) return 0;          // Tie
+    if (winner === 'O') return 10 - depth;
+    if (winner === 'X') return depth - 10;
+    if (!isMovesLeft(board)) return 0;
 
     if (isMax) {
         let best = -1000;
@@ -65,9 +65,9 @@ function minimax(board, depth, isMax) {
     }
 }
 
-// Returns the best move index for the AI ('O')
+// Returns the best move index for the computer ('O')
 function findBestMove(board) {
-    let bestVal = -1000; // Changed from -Infinity
+    let bestVal = -1000; 
     let bestMove = -1;
 
     for (let i = 0; i < 9; i++) {
@@ -108,7 +108,7 @@ function getResponseObj(statusCode, board, id, message, winner) {
     }),
     headers: {
       "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*", // Optional, for CORS
+      "Access-Control-Allow-Origin": "*",
     }
   };
 }
