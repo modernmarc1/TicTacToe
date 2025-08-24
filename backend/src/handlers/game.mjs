@@ -147,13 +147,6 @@ export const gameHandler = async (event) => {
       id = crypto.randomUUID();
       board = [squares];
     }
-
-    try {
-      // save end user move to DynamoDB
-      await putItemInDynamoDB(client, id, board);
-    } catch (error) {
-      return getResponseObj(400, squares, id, `Error saving game state: ${error}`, null);
-    }
     
     //find computer move
     let bestMove = findBestMove(squares);
